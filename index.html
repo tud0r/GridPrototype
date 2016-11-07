@@ -54,21 +54,12 @@
 				var even = 4;
 				var odd = (even - 1);
 				var offset = plane_W/2;
-
-
-				/** 
-				TODO 
-				MOVE TO ROW CLASS
-				**/
-				var tool = new Tools()
-				var evenRowX = tool.startingXposForRow(4, padding, plane_W, );
-				var oddRowX = tool.startingXposForRow(3, padding, plane_W);
 					
 				gridRowsArray = [
-					row = new Row(4, evenRowX, padding, plane_W, rowZ[1]),
-					row = new Row(3, oddRowX, padding, plane_W, rowZ[2]),
-					row = new Row(4, evenRowX, padding, plane_W, rowZ[3]),
-					row = new Row(3, oddRowX, padding, plane_W, rowZ[4])
+					row = new Row(4, padding, plane_W, rowZ[1]),
+					row = new Row(3, padding, plane_W, rowZ[2]),
+					row = new Row(4, padding, plane_W, rowZ[3]),
+					row = new Row(3, padding, plane_W, rowZ[4])
 				];
 
 				console.log( "gridRowsArray");
@@ -130,10 +121,10 @@
 		    		
 		    		var row = gridRowsArray[i];
 
-		    		row.padding = padding;
+		    		row.padding = params.padding;
 		    		row.itemWidth = plane_W;
-		    		row.zPos = rowZ[i+1];
-		    		// row.update()
+		    		// row.zPos = rowZ[i+1];
+		    		row.update()
 		    	}
 		    }
 
@@ -143,7 +134,7 @@
 		    }
 
 		    var gui = new dat.GUI()
-		    gui.add( params, 'padding').min(0).max(30).step(1);
+		    gui.add( params, 'padding').min(0).max(30).step(1).onChange( updateGrid );
 
 
 

@@ -8,16 +8,19 @@ class Row extends Array {
 
 	**/
 
-	constructor( length, xPos, padding, itemWidth, zPos ) {
-		super( length, xPos, padding, itemWidth, zPos )
+	constructor( length, padding, itemWidth, zPos ) {
+		super( length, padding, itemWidth, zPos )
+
+		this.tools = new Tools()
 
 		this.length = length;
-		this.xPos = xPos;
 		this.padding = padding;
 		this.itemWidth = itemWidth;
-		this.zPos = zPos;
 
-		var tools = new Tools()
+		this.zPos = zPos;
+		this.xPos = this.startXpos( this.length, this.padding, this.itemWidth );
+		
+
 
 		for ( var i = 0; i < this.length; i++) {
 			if (i == 0) {
@@ -29,17 +32,23 @@ class Row extends Array {
 	}
 
 	update() {
-		console.log( "row.update")
+
+		this.xPos = this.startXpos( this.length, this.padding, this.itemWidth );
 
 		for (var i = 0; i < this.length; i++ ) {
 
 			if (i == 0) {
-				this[i].avatar.position.x = this.xPos;
+				 this[i].avatar.position.x = this.xPos;
 			} else {
 				this[i].avatar.position.x = this.xPos + ((this.padding * i) + (this.itemWidth * i));
 			}
-			this[i].avatar.position.x = this.zPos;
+			this[i].avatar.position.z = this.zPos;
 		} 
+	}
+
+	startXpos( length, padding, itemWidth ) {
+	
+		 return this.tools.startingXposForRow( length, padding, itemWidth );
 	}
 
 	
