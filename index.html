@@ -24,11 +24,12 @@
 			var renderer;
 
 			var plane_W = 15;
-			var padding = 20;
+			var itemPadding = 20;
+			var rowPadding = plane_W;
 			var cameraZpos = 40;
 			var cameraYpos = 30;
 			var gridRowsArray;
-			var rowZ = [0, (-1*(plane_W*1)), (-1*(plane_W*2)), (-1*(plane_W*3)), (-1*(plane_W*4))];
+			var rowZ = [0];
 
 			function init() {
 
@@ -56,13 +57,16 @@
 				var even = 4;
 				var odd = (even - 1);
 				var offset = plane_W/2;
+
+				setRowSpacing( 4, plane_W )
 					
 				gridRowsArray = [
-					row = new Row(4, padding, plane_W, rowZ[1]),
-					row = new Row(3, padding, plane_W, rowZ[2]),
-					row = new Row(4, padding, plane_W, rowZ[3]),
-					row = new Row(3, padding, plane_W, rowZ[4])
+					row = new Row(4, itemPadding, plane_W, rowZ[1]),
+					row = new Row(3, itemPadding, plane_W, rowZ[2]),
+					row = new Row(4, itemPadding, plane_W, rowZ[3]),
+					row = new Row(3, itemPadding, plane_W, rowZ[4])
 				];
+
 
 				console.log( "gridRowsArray");
 				for ( i in gridRowsArray) {
@@ -101,6 +105,14 @@
 			
 			};
 
+			function setRowSpacing( numberOfRows, spacing ) {
+				for ( var i = 0; i < numberOfRows; i++ ) {
+					var rowNum = i+1;
+					rowZ[rowNum] = (spacing * rowNum) * -1;
+				}
+			}
+
+
 			window.onload = init;
 
 			function onResize() {
@@ -111,35 +123,38 @@
 
 		    window.addEventListener('resize', onResize, false);
 
-		    /*********** 
-				GUI 
-		    ************/
+
+		    /********************** 
+					GUI 
+		    ***********************/
 
 		    function updateGrid() {
 		    	console.log( "updateGrid");
+		    	setRowSpacing( 4, params.paddingZ );
 
 		    	for ( var i = 0; i < gridRowsArray.length; i++) {
  				
 		    		var row = gridRowsArray[i];
-
-		    		row.padding = params.padding;
+		    		row.padding = params.paddingX;
 		    		row.itemWidth = plane_W;
 		    		row.zPos = rowZ[i+1];
 		    		row.update()
 		    	}
-
 		    	camera.position.z = params.cameraZ;
 		    }
 
 
 		    var params = {
-		    	padding: padding,
+		    	paddingX: itemPadding,
+		    	paddingZ: rowPadding,
 		    	cameraZ: cameraZpos
 		    }
 
 		    var gui = new dat.GUI()
-		    gui.add( params, 'padding').min(0).max(30).step(1).onChange( updateGrid );
+		    gui.add( params, "paddingX").min(0).max(30).step(1).onChange( updateGrid );
+		    gui.add( params, "paddingZ").min(plane_W * 0.75).max(plane_W * 1.25).onChange( updateGrid );
 		    gui.add( params, "cameraZ").min(cameraZpos * 0.85).max(cameraZpos *1.25).onChange( updateGrid );
+
 
 
 

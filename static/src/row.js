@@ -13,14 +13,13 @@ class Row extends Array {
 
 		this.tools = new Tools()
 
-		this.length = length;
-		this.padding = padding;
-		this.itemWidth = itemWidth;
+		this.length 	= length;
+		this.padding 	= padding;
+		this.itemWidth 	= itemWidth;
 
 		this.zPos = zPos;
 		this.xPos = this.startXpos( this.length, this.padding, this.itemWidth );
 		
-
 
 		for ( var i = 0; i < this.length; i++) {
 			if (i == 0) {
