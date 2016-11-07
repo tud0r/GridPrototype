@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset=utf-8>
-		<title>My first Three.js app</title>
+		<title>Shindig Grid Prototype</title>
 		<style>
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
@@ -25,6 +25,8 @@
 
 			var plane_W = 15;
 			var padding = 20;
+			var cameraZpos = 40;
+			var cameraYpos = 30;
 			var gridRowsArray;
 			var rowZ = [0, (-1*(plane_W*1)), (-1*(plane_W*2)), (-1*(plane_W*3)), (-1*(plane_W*4))];
 
@@ -33,8 +35,8 @@
 				scene = new THREE.Scene();
 
 				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.5, 1000 );
-				camera.position.z = 40;
-				camera.position.y = 30
+				camera.position.z = cameraZpos;
+				camera.position.y = cameraYpos
 				camera.rotation.x = -0.05;
 
 				renderer = new THREE.WebGLRenderer();
@@ -68,6 +70,7 @@
 					console.log( row );
 				}
 				
+
 				/********************************************
 					 - populate grid with Avatars 
 					 - set Avatar coords to match coords of slots in grid 
@@ -83,9 +86,8 @@
 						row[k].avatar.position.z = row[k].z;
 						scene.add( row[k].avatar )
 					}
-
-		
 				}
+
 
 				document.body.appendChild( renderer.domElement );
 
@@ -96,8 +98,7 @@
 					renderer.render(scene, camera);
 				};
 
-				
-				// updateGrid();
+			
 			};
 
 			window.onload = init;
@@ -117,24 +118,28 @@
 		    function updateGrid() {
 		    	console.log( "updateGrid");
 
-		    	for ( i in gridRowsArray) {
-		    		
+		    	for ( var i = 0; i < gridRowsArray.length; i++) {
+ 				
 		    		var row = gridRowsArray[i];
 
 		    		row.padding = params.padding;
 		    		row.itemWidth = plane_W;
-		    		// row.zPos = rowZ[i+1];
+		    		row.zPos = rowZ[i+1];
 		    		row.update()
 		    	}
+
+		    	camera.position.z = params.cameraZ;
 		    }
 
 
 		    var params = {
-		    	padding: padding
+		    	padding: padding,
+		    	cameraZ: cameraZpos
 		    }
 
 		    var gui = new dat.GUI()
 		    gui.add( params, 'padding').min(0).max(30).step(1).onChange( updateGrid );
+		    gui.add( params, "cameraZ").min(cameraZpos * 0.85).max(cameraZpos *1.25).onChange( updateGrid );
 
 
 

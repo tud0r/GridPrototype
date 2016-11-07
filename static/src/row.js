@@ -2,9 +2,9 @@
 class Row extends Array {	
 
 	/**
-	Row Object 
+		Row Object 
 
-	creates row with coordinates positions 
+		creates row with coordinates positions 
 
 	**/
 
