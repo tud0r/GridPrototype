@@ -1,7 +1,7 @@
 
 # Grid Prototype
 
-An example and tool to help define layout specification and create code logic required for suggested gird layout in UX documents. Built with Javascript using [THREE JS](https://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene)
+An example and tool to help define layout specification and create code logic required for suggested grid layout in UX documents. Built with Javascript using [THREE JS](https://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene)
 
 ###Grid Rows 
 
@@ -19,7 +19,7 @@ Row Spacing = Avatar WIDTH
   
 ###Avatars 
 
-Avatar currently set to **4:3** aspect ratio to match majority of web cams. Any 16:9 webcams can simply be cropped. 
+Avatar currently set to **4:3** aspect ratio to match majority of web cams. Any 16:9 web cams can simply be cropped. 
 The width is set to a reasonable width to comply with the camera positioning along the Z axis and insure that the avatar is displayed at a reasonable size for UI interactions.
 
 Current default avatar dimensions 
@@ -30,7 +30,6 @@ Avatar **HEIGHT** = WIDTH * 0.75 (4:30 aspect ratio)
 
 ###Window Resizing
 On window resize, by default THREE JS adjust the camera field of view (FOV) to scale the objects in the scene.  
-This is good for making sure the entire grid is visible at all times however it could also make the objects too small to view and to interact with. The FOV scalling on window resize can be be elimitanted to present another alternative to make the padding between avatars correspond to window resize width to ensure they are displayed within the bounds of the window width.  
-Most likly a combination of the two approaches is needed with logic to determine when and which appraoch is used.
+This is good for making sure the entire grid is visible at all times however it could also make the objects too small to view and to interact with. The FOV scaling on window resize can be be eliminated to present another alternative to make the padding between avatars correspond to window resize width to ensure they are displayed within the bounds of the window width.  
+Most likely a combination of the two approaches is needed with logic to determine when and which approach is used.
 
- 
