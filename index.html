@@ -117,11 +117,6 @@
 
 			function onResize() {
 		        camera.aspect = window.innerWidth / window.innerHeight;
-
-		        // adjust the FOV
-    			camera.fov = ( 360 / Math.PI ) * Math.atan( tanFOV * ( window.innerHeight / windowHeight ) );
-
-
 		        camera.updateProjectionMatrix();
 		        renderer.setSize(window.innerWidth, window.innerHeight);
 		    }
