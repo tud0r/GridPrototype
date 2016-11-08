@@ -18,7 +18,7 @@ class Row extends Array {
 		this.itemWidth 	= itemWidth;
 
 		this.zPos = zPos;
-		this.xPos = this.startXpos( this.length, this.padding, this.itemWidth );
+		this.xPos = this.rowXpos( this.length, this.padding, this.itemWidth );
 		
 
 		for ( var i = 0; i < this.length; i++) {
@@ -32,7 +32,7 @@ class Row extends Array {
 
 	update() {
 
-		this.xPos = this.startXpos( this.length, this.padding, this.itemWidth );
+		this.xPos = this.rowXpos( this.length, this.padding, this.itemWidth );
 
 		for (var i = 0; i < this.length; i++ ) {
 
@@ -45,7 +45,7 @@ class Row extends Array {
 		} 
 	}
 
-	startXpos( length, padding, itemWidth ) {
+	rowXpos( length, padding, itemWidth ) {
 	
 		 return this.tools.startingXposForRow( length, padding, itemWidth );
 	}
