@@ -5,8 +5,47 @@ An example and tool to help define layout specification and create code logic re
 
 ###Grid Rows 
 
-Rows alternate from odd and even numbers to get the best visibility for each avatar, and also form an a more organic pattern to simulate a crowd to avoid military style rows.
-The grid is currently set to 4 rows with 14 slots that can be occupied with avatars.   
+Rows alternate from odd and even numbers to get the best visibility for each avatar, and also to form a more organic pattern to simulate a crowd to avoid military style rows. The FIRST front most row in the grid should ALWAYS be an even number to leave space for the users avatar that will anchored at the bottom center of the screen. 
+The grid is currently set to 4 rows with a default of 14 Participants that can adjusted with the UI slider to a maximum of 20;  
+
+
+###Grid Pattern Configuration 
+
+The pattern configurations of the grid are stored in a Dictionary (hash table) where the key represents the number of participants and the corresponding object is an Array of integers where;  
+ • the length of the Array determines the number of rows in the grid  
+ • and the integer value determines how many items occupy each row. 
+
+```javascript
+four_row_matrix_config = {
+        "1":[0, 1, 0, 0], 
+        "2":[2, 0, 0, 0],  
+		"3":[2, 1, 0, 0],
+		"4":[4, 0, 0, 0],  
+		"5":[4, 1, 0, 0],  
+		"6":[4, 0, 2, 0],  
+		"7":[4, 3, 0, 0],  
+		"8":[4, 1, 2, 1],  
+		"9":[2, 3, 4, 0],  
+		"10":[4, 3, 2, 1],  
+		"11":[4, 3, 4, 0],  
+		"12":[4, 3, 4, 1],  
+		"13":[4, 3, 2, 3],  
+		"14":[4, 3, 4, 3],  
+		"15":[4, 5, 6, 0],  
+		"16":[4, 5, 6, 1],  
+		"17":[6, 5, 6, 0],  
+		"18":[6, 5, 4, 3],  
+		"19":[6, 7, 6, 0],  
+		"20":[6, 5, 6, 3],  
+		"21":[6, 7, 8, 0],  
+		"22":[6, 7, 8, 1],  
+		"23":[6, 7, 8, 2],  
+		"24":[0, 1, 0, 0],  
+		"25":[0, 1, 0, 0]  
+	};  
+```  
+
+You can create multiple of these tables to apply for various scenarios where you'd might need the grid to be reduces to two rows or have another configuration for different window size. 
   
 
 ###Row Spacing  
@@ -25,7 +64,7 @@ The width is set to a reasonable width to comply with the camera positioning alo
 Current default avatar dimensions 
 
 Avatar **WIDTH**  = 15px  
-Avatar **HEIGHT** = WIDTH * 0.75 (4:30 aspect ratio)
+Avatar **HEIGHT** = WIDTH * 0.75 (4:3 aspect ratio)
 
 
 ###Window Resizing
