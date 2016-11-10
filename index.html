@@ -12,6 +12,7 @@
 		<script src="static/libs/three.js"></script>
 		<script src="static/libs/dat.gui.min.js"></script>
 		<script src="static/src/tools.js"></script>
+		<script src="static/src/gridMatrix.js"></script>
 		<script src="static/src/row.js"></script>
 		<script>
 
@@ -28,70 +29,56 @@
 			var rowPadding = plane_W;
 			var cameraZpos = 40;
 			var cameraYpos = 30;
-			var gridRowsArray;
-			var rowZ = [0];
+
+			var planeGeo 	= new THREE.PlaneGeometry( plane_W, (plane_W * 0.75), 1);
+			var imgTexture 	= new THREE.TextureLoader().load("assets/img/girl_blonde3x4.jpg");
+			var imgMat 		= new THREE.MeshBasicMaterial({color: 0xffffff, map:imgTexture});
+			var plane 		= new THREE.Mesh(planeGeo, imgMat);
+
+			var itemCount = 14
+			var grid = new GridMatrix( itemCount );
+	
+			var noScaleOnResize = false;
+			var tanFOV; 
+			var FOV = 75;
+			var windowHeight = window.innerHeight;
+
 
 			function init() {
 
+				console.log( "**gridMatrix", grid );
+
 				scene = new THREE.Scene();
 
-				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.5, 1000 );
+				camera = new THREE.PerspectiveCamera( FOV, window.innerWidth / window.innerHeight, 0.5, 1000 );
 				camera.position.z = cameraZpos;
-				camera.position.y = cameraYpos
+				camera.position.y = cameraYpos;
 				camera.rotation.x = -0.05;
+				tanFOV = Math.tan(((Math.PI / 180) * camera.fov / 2 ));
 
 				renderer = new THREE.WebGLRenderer();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
-
-				/***********************
+				
+				/**********************************
 					GRID SET UP 
-				************************/
-				var planeGeo 	= new THREE.PlaneGeometry( plane_W, (plane_W * 0.75), 1);
-				var imgTexture 	= new THREE.TextureLoader().load("assets/img/girl_blonde3x4.jpg");
-				var imgMat 		= new THREE.MeshBasicMaterial({color: 0xffffff, map:imgTexture});
-				var plane 		= new THREE.Mesh(planeGeo, imgMat);
-				var participants = 14;
-				var participantArray = [];
-
-				var even = 4;
-				var odd = (even - 1);
-				var offset = plane_W/2;
-
-				setRowSpacing( 4, plane_W )
-					
-				gridRowsArray = [
-					row = new Row(4, itemPadding, plane_W, rowZ[1]),
-					row = new Row(3, itemPadding, plane_W, rowZ[2]),
-					row = new Row(4, itemPadding, plane_W, rowZ[3]),
-					row = new Row(3, itemPadding, plane_W, rowZ[4])
-				];
+				**********************************/
+				grid.setRowPadding( plane_W ); //set the padding between rows to the width of the items populating rows. 
 
 
-				console.log( "gridRowsArray");
-				for ( i in gridRowsArray) {
-					var row = gridRowsArray[i];
-					console.log( row );
-				}
+				/**********************************
+					CREATE GRID ROW SLOTS
+				**********************************/
+				grid.setRowSlots( itemPadding, plane_W );
 				
 
-				/********************************************
-					 - populate grid with Avatars 
-					 - set Avatar coords to match coords of slots in grid 
-				***********************************************/ 
+				/********************************************************
+					 CREATE AVATARS AND POPULATE GRID SLOTS
+					 (set Avatar coords to match coords of slots in grid)
+				*********************************************************/ 
+				grid.setAvatars()
 
-				for (i = 0; i < gridRowsArray.length; i++ ) {
-
-					var row = gridRowsArray[i];
-
-					for (k = 0; k < row.length; k++ ) {
-						row[k].avatar = new THREE.Mesh(planeGeo, imgMat); 
-						row[k].avatar.position.x = row[k].x;
-						row[k].avatar.position.z = row[k].z;
-						scene.add( row[k].avatar )
-					}
-				}
-
+				
 
 				document.body.appendChild( renderer.domElement );
 
@@ -101,22 +88,25 @@
 					requestAnimationFrame( render );
 					renderer.render(scene, camera);
 				};
-
-			
 			};
 
-			function setRowSpacing( numberOfRows, spacing ) {
-				for ( var i = 0; i < numberOfRows; i++ ) {
-					var rowNum = i+1;
-					rowZ[rowNum] = (spacing * rowNum) * -1;
-				}
-			}
-
-
+		    /********************** 
+				INITIALIZE 
+		    ***********************/
 			window.onload = init;
 
+
+		    /********************** 
+				Window Resize 
+		    ***********************/
 			function onResize() {
 		        camera.aspect = window.innerWidth / window.innerHeight;
+		        
+		        if (noScaleOnResize) {
+		        	camera.fov = ( 360 / Math.PI) * Math.atan( tanFOV * (window.innerHeight / windowHeight));
+		        } else {
+		        	camera.fov = FOV;
+		        }
 		        camera.updateProjectionMatrix();
 		        renderer.setSize(window.innerWidth, window.innerHeight);
 		    }
@@ -125,39 +115,69 @@
 
 
 		    /********************** 
-					GUI 
+				GUI Controls
 		    ***********************/
-
-		    function updateGrid() {
-		    	console.log( "updateGrid");
-		    	setRowSpacing( 4, params.paddingZ );
-
-		    	for ( var i = 0; i < gridRowsArray.length; i++) {
- 				
-		    		var row = gridRowsArray[i];
-		    		row.padding = params.paddingX;
-		    		row.itemWidth = plane_W;
-		    		row.zPos = rowZ[i+1];
-		    		row.update()
-		    	}
-		    	camera.position.z = params.cameraZ;
-		    }
-
-
 		    var params = {
 		    	paddingX: itemPadding,
 		    	paddingZ: rowPadding,
-		    	cameraZ: cameraZpos
+		    	cameraZ: cameraZpos, 
+		    	participants: itemCount,
+		    	noScaleOnResize: noScaleOnResize 
 		    }
 
 		    var gui = new dat.GUI()
-		    gui.add( params, "paddingX").min(0).max(30).step(1).onChange( updateGrid );
-		    gui.add( params, "paddingZ").min(plane_W * 0.75).max(plane_W * 1.25).onChange( updateGrid );
-		    gui.add( params, "cameraZ").min(cameraZpos * 0.85).max(cameraZpos *1.25).onChange( updateGrid );
+		    gui.add( params, "paddingX").min(0).max(30).step(1).onChange( updateItemPaddingX );
+		    gui.add( params, "paddingZ").min(plane_W).max(plane_W * 1.25).step(1).onChange( updateRowZpos );
+		    gui.add( params, "cameraZ").min(cameraZpos * 0.85).max(cameraZpos *1.25).step(1).onChange( updateCameraZpos );
+		    gui.add( params, "participants").min(1).max(20).step(1).onChange(updateSize);
+		    gui.add( params, "noScaleOnResize").onChange( setNoScaleOnResize );
 
+		    function setNoScaleOnResize() {
+		    	if (noScaleOnResize) {
+		    		noScaleOnResize = false; 
+		    	} else {
+		    		noScaleOnResize = true;
+		    	}
+		    }
 
+		    function updateItemPaddingX() {
+		    	if( itemPadding != params.paddingX ) {
+		    		itemPadding = params.paddingX;
+		    		for( var i = 0; i < grid.rowsCount; i++) {
+		    			var row = grid.rows[i];
+		    			row.padding = itemPadding;
+		    			row.update();
+		    		}
+		    	}
+		    }
 
+		    function updateRowZpos() {
+		    	if (grid.padding != params.paddingZ) {
+		    		grid.setRowPadding( params.paddingZ );
+			    	for ( var i = 0; i < grid.rowsCount; i++) {
+			    		var row = grid.rows[i];
+			    		row.zPos = grid.rowZpadding[i+1];
+			    		row.update()
+			    	}
+		    	}
+		    }
+
+		    function updateCameraZpos() {
+		    	if ( cameraZpos != params.cameraZ) {
+		    		cameraZpos = params.cameraZ;
+		    		camera.position.z = cameraZpos;
+		    	}
+		    }
+
+		    function updateSize() {
+		    	if( itemCount != params.participants){
+		    		itemCount = params.participants;
+		    		grid.updateMatrix( itemCount );
+		    	}
+		    }
 
 		</script>
 	</body>
+
+
 </html>

@@ -33,3 +33,5 @@ On window resize, by default THREE JS adjust the camera field of view (FOV) to s
 This is good for making sure the entire grid is visible at all times however it could also make the objects too small to view and to interact with. The FOV scaling on window resize can be be eliminated to present another alternative to make the padding between avatars correspond to window resize width to ensure they are displayed within the bounds of the window width.  
 Most likely a combination of the two approaches is needed with logic to determine when and which approach is used.
 
+You can toggle window resize scaling on/off in the UI controls in the top left. (The auto padding on window resize when scaling is off has not been implemented. You can use the x padding slider to adjust padding)
+
