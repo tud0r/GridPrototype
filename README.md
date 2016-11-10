@@ -35,3 +35,5 @@ Most likely a combination of the two approaches is needed with logic to determin
 
 You can toggle window resize scaling on/off in the UI controls in the top left. (The auto padding on window resize when scaling is off has not been implemented. You can use the x padding slider to adjust padding)
 
+
+
