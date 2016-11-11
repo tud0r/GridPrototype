@@ -4,7 +4,10 @@
 		<meta charset=utf-8>
 		<title>Shindig Grid Prototype</title>
 		<style>
-			body { margin: 0; }
+			body { 
+				margin: 0; 
+				background-image: url("assets/img/rooms/white2.jpg");
+			}
 			canvas { width: 100%; height: 100% }
 		</style>
 	</head>
@@ -19,7 +22,6 @@
 			/***********************
 				3D SET UP 
 			************************/
-
 			var scene;
 			var camera;
 			var renderer;
@@ -36,14 +38,17 @@
 			var plane 		= new THREE.Mesh(planeGeo, imgMat);
 
 			var itemCount = 14
-			var grid = new GridMatrix( itemCount );
-	
+			var grid;
+
 			var noScaleOnResize = false;
 			var tanFOV; 
 			var FOV = 75;
 			var windowHeight = window.innerHeight;
 
 
+			/**********************************
+					  INITIALIZER
+			**********************************/
 			function init() {
 
 				console.log( "**gridMatrix", grid );
@@ -53,32 +58,20 @@
 				camera = new THREE.PerspectiveCamera( FOV, window.innerWidth / window.innerHeight, 0.5, 1000 );
 				camera.position.z = cameraZpos;
 				camera.position.y = cameraYpos;
-				camera.rotation.x = -0.05;
+				camera.rotation.x = -0.08;
 				tanFOV = Math.tan(((Math.PI / 180) * camera.fov / 2 ));
 
-				renderer = new THREE.WebGLRenderer();
+				renderer = new THREE.WebGLRenderer(/*{alpha:true}*/);
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
-				
-				/**********************************
-					GRID SET UP 
-				**********************************/
-				grid.setRowPadding( plane_W ); //set the padding between rows to the width of the items populating rows. 
-
 
 				/**********************************
-					CREATE GRID ROW SLOTS
+						 CREATE GRID 
 				**********************************/
-				grid.setRowSlots( itemPadding, plane_W );
+				var defaultRowPadding = plane_W;
+				grid = new GridMatrix( itemCount, defaultRowPadding, plane_W );
 				
 
-				/********************************************************
-					 CREATE AVATARS AND POPULATE GRID SLOTS
-					 (set Avatar coords to match coords of slots in grid)
-				*********************************************************/ 
-				grid.setAvatars()
-
-				
 				document.body.appendChild( renderer.domElement );
 
 				render();
@@ -157,8 +150,8 @@
 		    		grid.setRowPadding( params.paddingZ );
 			    	for ( var i = 0; i < grid.rowsCount; i++) {
 			    		var row = grid.rows[i];
-			    		row.zPos = grid.rowZpadding[i+1];
-			    		row.update()
+			    		row.zPos = grid.rowZpadding[i];
+			    		row.update();
 			    	}
 		    	}
 		    };

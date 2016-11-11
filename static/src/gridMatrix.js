@@ -1,13 +1,18 @@
 class GridMatrix {
 	
-	constructor( size ) {
+	constructor( size, rowPadding, itemWidth ) {
 
 		this.size = size; 
 		this.matrix = this.setMatrix(this.size);
 		this.rowsCount = this.matrix.length;
 		this.rows = [];
-		this.padding;
-		this.rowZpadding = [0];
+		this.firstRowZpos = (rowPadding * -1);
+		this.padding = rowPadding;
+		this.rowZpadding = [];
+
+		this.setRowPadding( this.padding ); 			// populates rowZpaddingArray 
+		this.createGridRows( this.padding, itemWidth ); // create grid
+		this.populateGrid();
 	};
 
 	updateMatrix( newSize ) {
@@ -61,15 +66,24 @@ class GridMatrix {
 		}
 	};
 
-	setRowSlots( rowItemPaddding, itemWidth ) {
+
+	/**********************************
+			 CREATE GRID 
+	**********************************/
+	createGridRows( rowItemPaddding, itemWidth ) {
 		for (var i=0; i < this.rowsCount; i++ ) {
 
-			var row = new Row( this.matrix[i], rowItemPaddding, itemWidth, this.rowZpadding[i+1]);
+			var row = new Row( this.matrix[i], rowItemPaddding, itemWidth, this.rowZpadding[i]);
 			this.rows[i] = row;
 		};
 	};
 
-	setAvatars() {
+
+	/********************************************************
+		 CREATE AVATARS AND POPULATE GRID SLOTS
+		 (set Avatar coords to match coords of slots in grid rows)
+	*********************************************************/ 
+	populateGrid() {
 		for ( var i = 0; i < this.rowsCount; i++ ) {
 
 			var row = this.rows[i];
@@ -94,16 +108,22 @@ class GridMatrix {
 	setRowPadding( zPadding ) {
 		this.padding = zPadding;
 		for ( var i = 0; i < this.rowsCount; i++) {
-			var rowIndex = [i+1];
-			this.rowZpadding[ rowIndex ] = ((zPadding * rowIndex) * -1);
+			var rowIndex = [i];
+
+			// this.firstRowZpos = (this.padding * -1) // uncomment to update padding for first row
+		
+			this.rowZpadding[ rowIndex ] = (this.firstRowZpos  + (rowIndex * this.padding) * -1);
 		}
+
+		console.log( "grid.setRowPadding - padding", this.padding);
+		console.log( "grid.rowZpadding - rowZpadding", this.rowZpadding);
 	};
 
 
 
-	setMatrix(num) {
+	setMatrix( size ) {
 
-		var key = String(num);
+		var key = String( size );
 
 		var four_row_matrix_config = {
 			"1":[0, 1, 0, 0],

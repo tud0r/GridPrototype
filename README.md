@@ -1,7 +1,10 @@
 
 # Grid Prototype
 
-An example and tool to help define layout specification and create code logic required for suggested grid layout in UX documents. Built with Javascript using [THREE JS](https://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene)
+
+An example and tool to help define layout specification and create code logic required for suggested grid layout in UX documents. Built with Javascript using [THREE JS](https://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene)  
+  
+![](assets/img/screen.png)
 
 ###Grid Rows 
 
@@ -77,6 +80,74 @@ This is good for making sure the entire grid is visible at all times however it 
 Most likely a combination of the two approaches is needed with logic to determine when and which approach is used.
 
 You can toggle window resize scaling on/off in the UI controls in the top left. (The auto padding on window resize when scaling is off has not been implemented. You can use the x padding slider to adjust padding)
+
+#Docs
+###GridMatrix
+#####- Constructor
+
+**GridMatrix( size, rowPadding, itemWidth )**  
+  
+
+**size** - initial number if items to create grid  
+
+**rowPadding** - initial spacing between rows in grid  
+  
+**itemWidth** - initial width of items in grid  
+
+####- Properties  
+##### .size
+
+##### .matrix  
+
+##### .rowsCount  
+
+##### .rows  
+
+##### .firstRowZpos
+##### .padding  
+
+##### .rowZpadding  
+
+####- Methods  
+
+##### .updateMatrix ( newSize )  
+
+##### .updateItemSize ( newItemWidth )  
+
+##### .createGridRows ( rowItemPaddding, itemWidth )  
+
+##### .populateGrid ()  
+
+##### .setRowPadding ( zPadding )  
+
+##### .setMatrix ( size )  
+  
+###Row
+####- Constructor  
+**Row( length, padding, itemWidth, zPos )**  
+
+
+####- Properties  
+
+##### .length  
+
+##### .padding  
+
+##### .itemWidth  
+
+##### .zPos  
+
+##### .xPos  
+  
+####- Methods  
+
+##### .addItemAtIndex( index )  
+
+##### .removeItemAtIndex( index )  
+
+##### .update()  
+
+##### .setXpos()  
 
 
 
