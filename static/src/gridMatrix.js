@@ -28,7 +28,7 @@ class GridMatrix {
 					}
 				}	
 
-			} else if ( newRowCount < rowCount) {
+			} else if (newRowCount < rowCount) {
 
 				var diff = (rowCount - newRowCount);
 				for (var k=0; k< diff; k++) {
@@ -46,6 +46,21 @@ class GridMatrix {
 		}
 	};
 
+	updateItemSize( newItemWidth ) {
+		for (var i = 0; i < this.rowsCount; i++ ) {
+
+			var row = this.rows[i];
+			row.itemWidth = newItemWidth;
+			row.update()
+
+			for ( var k = 0; k < row.length; k++ ) {
+				 var newPlaneGeometry = new THREE.PlaneGeometry( newItemWidth, (newItemWidth * 0.75), 1);
+				 row[k].avatar.geometry = newPlaneGeometry;
+			};
+			// row.update(); //decided to call update earlier to update row before scaling items
+		}
+	};
+
 	setRowSlots( rowItemPaddding, itemWidth ) {
 		for (var i=0; i < this.rowsCount; i++ ) {
 
@@ -55,8 +70,7 @@ class GridMatrix {
 	};
 
 	setAvatars() {
-
-		for ( var i = 0; i < this.rows.length; i++ ) {
+		for ( var i = 0; i < this.rowsCount; i++ ) {
 
 			var row = this.rows[i];
 
@@ -75,7 +89,7 @@ class GridMatrix {
 				}
 			}
 		}
-	}
+	};
 
 	setRowPadding( zPadding ) {
 		this.padding = zPadding;
@@ -83,7 +97,9 @@ class GridMatrix {
 			var rowIndex = [i+1];
 			this.rowZpadding[ rowIndex ] = ((zPadding * rowIndex) * -1);
 		}
-	}
+	};
+
+
 
 	setMatrix(num) {
 
@@ -116,9 +132,8 @@ class GridMatrix {
 			"24":[0, 1, 0, 0],
 			"25":[0, 1, 0, 0]
 		};
-
 		return four_row_matrix_config[key];
-	} 
+	};
 
 
 }

@@ -5,15 +5,19 @@ An example and tool to help define layout specification and create code logic re
 
 ###Grid Rows 
 
-Rows alternate from odd and even numbers to get the best visibility for each avatar, and also to form a more organic pattern to simulate a crowd to avoid military style rows. The FIRST front most row in the grid should ALWAYS be an even number to leave space for the users avatar that will anchored at the bottom center of the screen. 
-The grid is currently set to 4 rows with a default of 14 Participants that can adjusted with the UI slider to a maximum of 20;  
+Rows alternate from odd and even numbers to get the best visibility for each avatar, and also to form a more organic pattern to simulate a crowd to avoid military style rows. The FIRST front most row in the grid should ALWAYS be an even number to leave space for the users avatar that will be anchored at the bottom center of the screen. 
+The grid is currently set to 4 rows with a default of 14 Participants that can be adjusted with the UI slider to a maximum of 20;  
 
 
 ###Grid Pattern Configuration 
 
-The pattern configurations of the grid are stored in a Dictionary (hash table) where the key represents the number of participants and the corresponding object is an Array of integers where;  
+The pattern configurations of the grid are stored in a Dictionary (hash table) where the key represents the number of participants and the corresponding object is an Array of integers where; 
+
  • the length of the Array determines the number of rows in the grid  
- • and the integer value determines how many items occupy each row. 
+ • and the integer value determines how many items occupy each row  
+ • the values in the Array will always be alternating odd and even numbers for the desired effect  
+ • the sum of the integer values in each Array should always total the integer value of its corresponding key in the table.  
+ 
 
 ```javascript
 four_row_matrix_config = {
@@ -45,7 +49,7 @@ four_row_matrix_config = {
 	};  
 ```  
 
-You can create multiple of these tables to apply for various scenarios where you'd might need the grid to be reduces to two rows or have another configuration for different window size. 
+More of these tables can be created to apply configurations for various scenarios where you might need the grid to be reduced to two rows or have another configuration for different window size. 
   
 
 ###Row Spacing  

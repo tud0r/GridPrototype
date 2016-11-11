@@ -16,7 +16,7 @@ class Row extends Array {
 		this.itemWidth 	= itemWidth;
 
 		this.zPos = zPos;
-		this.xPos = this.rowXpos( this.length, this.padding, this.itemWidth );	
+		this.xPos = this.setXpos();	
 
 		for ( var i = 0; i < this.length; i++) {
 			if (i == 0) {
@@ -29,19 +29,20 @@ class Row extends Array {
 
 	addItemAtIndex( index ) {
 		this[index] = {avatar:null, x:this.xPos + ((this.padding * index) + (this.itemWidth * index)), z:this.zPos }
-		this[index].avatar = new THREE.Mesh(planeGeo, imgMat);
+		var planeGeometry = new THREE.PlaneGeometry( this.itemWidth, (this.itemWidth * 0.75), 1);
+		this[index].avatar = new THREE.Mesh(planeGeometry, imgMat);
 		scene.add( this[index].avatar );
-		this.update()
+		this.update();
 	};
 
 	removeItemAtIndex( index ){
 		scene.remove( this[index].avatar );
 		this.splice(index, 1);
-		this.update()
+		this.update();
 	};
 
 	update() {
-		this.xPos = this.rowXpos( this.length, this.padding, this.itemWidth );
+		this.xPos = this.setXpos();
 		for (var i = 0; i < this.length; i++ ) {
 			if (i == 0) {
 				 this[i].avatar.position.x = this.xPos;
@@ -52,15 +53,15 @@ class Row extends Array {
 		} 
 	};
 
-	rowXpos( length, padding, itemWidth ) {
+	setXpos() {
 		var startX = 0;
 
 		if( this.tools.isEvenNumber( this.length ) ) {
 
-			var offset = itemWidth/2;
-			var halfRow = (this.length/2);
-			var fistAvatarXpos = ((plane_W * halfRow) + (padding/2)) - offset;
-			var paddingTotal  = (padding * (halfRow-1));
+			var offset = (this.itemWidth / 2);
+			var halfRow = (this.length / 2);
+			var fistAvatarXpos = ((this.itemWidth * halfRow) + (this.padding/2)) - offset;
+			var paddingTotal  = (this.padding * (halfRow-1));
 			startX = (fistAvatarXpos + paddingTotal);
 
 			return startX * -1;
@@ -68,7 +69,7 @@ class Row extends Array {
 		} else {
 
 			var halfRowMinusHalfAvatar = Math.floor(this.length / 2);
-			startX = (halfRowMinusHalfAvatar * plane_W) + (padding * halfRowMinusHalfAvatar);
+			startX = (halfRowMinusHalfAvatar * this.itemWidth) + (this.padding * halfRowMinusHalfAvatar);
 			
 			return startX * -1;
 		}

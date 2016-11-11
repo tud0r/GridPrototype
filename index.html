@@ -121,14 +121,16 @@
 		    	paddingZ: rowPadding,
 		    	cameraZ: cameraZpos, 
 		    	participants: itemCount,
+		    	itemSize: plane_W,
 		    	noScaleOnResize: noScaleOnResize 
 		    }
 
 		    var gui = new dat.GUI()
 		    gui.add( params, "paddingX").min(0).max(30).step(1).onChange( updateItemPaddingX );
-		    gui.add( params, "paddingZ").min(plane_W).max(plane_W * 1.25).step(1).onChange( updateRowZpos );
+		    gui.add( params, "paddingZ").min(plane_W).max(plane_W * 4).step(1).onChange( updateRowZpos );
 		    gui.add( params, "cameraZ").min(cameraZpos * 0.85).max(cameraZpos *1.25).step(1).onChange( updateCameraZpos );
 		    gui.add( params, "participants").min(1).max(20).step(1).onChange(updateSize);
+		    gui.add( params, "itemSize").min(15).max(30).step(1).onChange( updateItemSize );
 		    gui.add( params, "noScaleOnResize").onChange( setNoScaleOnResize );
 
 		    function setNoScaleOnResize() {
@@ -137,7 +139,7 @@
 		    	} else {
 		    		noScaleOnResize = true;
 		    	}
-		    }
+		    };
 
 		    function updateItemPaddingX() {
 		    	if( itemPadding != params.paddingX ) {
@@ -148,7 +150,7 @@
 		    			row.update();
 		    		}
 		    	}
-		    }
+		    };
 
 		    function updateRowZpos() {
 		    	if (grid.padding != params.paddingZ) {
@@ -159,21 +161,31 @@
 			    		row.update()
 			    	}
 		    	}
-		    }
+		    };
 
 		    function updateCameraZpos() {
 		    	if ( cameraZpos != params.cameraZ) {
 		    		cameraZpos = params.cameraZ;
 		    		camera.position.z = cameraZpos;
 		    	}
-		    }
+		    };
 
 		    function updateSize() {
 		    	if( itemCount != params.participants){
 		    		itemCount = params.participants;
 		    		grid.updateMatrix( itemCount );
 		    	}
-		    }
+		    };
+
+		    function updateItemSize() {
+		    	if( plane_W != params.itemSize ) {
+		    		plane_W = params.itemSize;
+
+		    		grid.updateItemSize( plane_W );
+
+		    		// console.log("ITEM W", plane_W);
+		    	}
+		    };
 
 		</script>
 	</body>
