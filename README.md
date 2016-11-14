@@ -46,8 +46,8 @@ four_row_matrix_config = {
 		"20":[6, 5, 6, 3],  
 		"21":[6, 7, 8, 0],  
 		"22":[6, 7, 8, 1],  
-		"23":[6, 7, 8, 2],  
-		"24":[0, 1, 0, 0],  
+		"23":[6, 5, 8, 4],  
+		"24":[6, 7, 8, 2],  
 		"25":[0, 1, 0, 0]  
 	};  
 ```  
@@ -83,71 +83,112 @@ You can toggle window resize scaling on/off in the UI controls in the top left. 
 
 #Docs
 ###GridMatrix
-#####- Constructor
+####- Constructor
 
-**GridMatrix( size, rowPadding, itemWidth )**  
+**```GridMatrix( size, rowPadding, itemWidth )```**  
   
 
-**size** - initial number if items to create grid  
+- **```size```**  
+initial number if items to create grid  
 
-**rowPadding** - initial spacing between rows in grid  
-  
-**itemWidth** - initial width of items in grid  
+- **```rowPadding```**  
+initial spacing between rows in grid  
+
+- **```itemWidth```**  
+initial width of items in grid  
 
 ####- Properties  
-##### .size
-
-##### .matrix  
-
-##### .rowsCount  
-
-##### .rows  
-
-##### .firstRowZpos
-##### .padding  
-
-##### .rowZpadding  
-
-####- Methods  
-
-##### .updateMatrix ( newSize )  
-
-##### .updateItemSize ( newItemWidth )  
-
-##### .createGridRows ( rowItemPaddding, itemWidth )  
-
-##### .populateGrid ()  
-
-##### .setRowPadding ( zPadding )  
-
-##### .setMatrix ( size )  
+##### ```.size```  
+The total number of items used to make up the grid.  
   
-###Row
+##### ```.matrix```  
+An array of integers where the length of the array is how many rows make up the grid. And the value of the integer is how many items are in a row. Multiple grid matrix are created for various grid patterns and layouts.  
+  
+##### ```.rowsCount```  
+Total number of rows in the grid.  
+  
+##### ```.rows```  
+An Array of Row Objects.  
+  
+##### ```.firstRowZpos```  
+The .x  position of the Row. (.x positions of each item in the row are calculated based on this coordinate.)
+  
+##### ```.padding```  
+Space in pixels between each item.  
+  
+##### ```.rowZpadding```  
+Space in pixels between each row.  
+  
+####- Methods  
+  
+##### ```.updateMatrix ( newSize )```   
+Updates the current matrix to a new one based on the argument passed into the ```size``` parameter.  
+
+##### ```.updateItemSize ( newItemWidth )```  
+Update the size of the items in the grid based on the argument passed into the ```newItemWidth``` parameter. 
+
+##### ```.createGridRows ( rowItemPaddding, itemWidth )```  
+Called at initialization to create the initial grid row objects.  
+  
+##### ```.populateGrid ()```  
+Populates grid with items (3D Plane meshes created with THREE JS)  
+
+##### ```.setRowPadding ( zPadding )```  
+Set row padding between rows to the argument for the ```zPadding``` parameter.  
+
+##### ```.setMatrix ( size )```  
+Set the size (number of items) in the grid to the argument for the ```size``` parameter. 
+  
+###Row  
+The Row object is an extension of an Array object and has custom properties and methods for managing items that are contained in a row.  
+
 ####- Constructor  
-**Row( length, padding, itemWidth, zPos )**  
+
+**```Row( length, padding, itemWidth, zPos )```**  
+
+- **```length```**  
+Number if items in the Row  
+  
+- **```padding```**  
+Spacing between items in the row  
+  
+- **```itemWidth```**  
+Width of items in row. Used to calculate each items .x position   
+  
+- **```zPos```**  
+The .z position for the Row object.   
 
 
 ####- Properties  
 
-##### .length  
+##### ```.length```  
+Number if items in the Row  
+  
+##### ```.padding```  
+Spacing between items in the row  
 
-##### .padding  
+##### ```.itemWidth```  
+Width of items in row. Used to calculate each items .x position  
 
-##### .itemWidth  
+##### ```.zPos```  
+The .z position for the Row object  
 
-##### .zPos  
-
-##### .xPos  
+##### ```.xPos```  
+The .x position for the Row object 
   
 ####- Methods  
 
-##### .addItemAtIndex( index )  
-
-##### .removeItemAtIndex( index )  
-
-##### .update()  
-
-##### .setXpos()  
+##### ```.addItemAtIndex( index )```  
+Add an new item into a Row  
+  
+##### ```.removeItemAtIndex( index )```  
+Remove item from Row  
+  
+##### ```.update()```  
+Update the row after any changes   
+  
+##### ```.setXpos()```  
+Set the .x position for the Row (.x position for the Row will also be the same as the .x position for the first item in each row)    
 
 
 
