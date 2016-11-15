@@ -15,8 +15,8 @@ class GridMatrix {
 		this.populateGrid();
 	};
 
-	updateMatrix( newSize ) {
-		// // update grid layout
+	updateMatrix( newSize ) { // update grid layout
+		
 		this.size = newSize;
 		this.matrix = this.setMatrix( this.size );
 
@@ -79,10 +79,6 @@ class GridMatrix {
 	};
 
 
-	/********************************************************
-		 CREATE AVATARS AND POPULATE GRID SLOTS
-		 (set Avatar coords to match coords of slots in grid rows)
-	*********************************************************/ 
 	populateGrid() {
 		for ( var i = 0; i < this.rowsCount; i++ ) {
 
@@ -147,12 +143,19 @@ class GridMatrix {
 			"19":[6, 7, 6, 0],
 			"20":[6, 5, 6, 3],
 			"21":[6, 7, 8, 0],
-			"22":[6, 7, 8, 1],
-			"23":[6, 7, 8, 2],
-			"24":[0, 1, 0, 0],
-			"25":[0, 1, 0, 0]
+			"22":[6, 7, 8, 1]
+			// "23":[6, 7, 8, 2],
+			// "24":[0, 1, 0, 0],
+			// "25":[0, 1, 0, 0]
 		};
-		return four_row_matrix_config[key];
+
+		if ( four_row_matrix_config[key] ) {
+			return four_row_matrix_config[key];
+		} else {
+			console.log("ERROR : NO matrix found for grid size");
+			return null
+		}
+		
 	};
 
 

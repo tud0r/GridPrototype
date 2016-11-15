@@ -6,12 +6,15 @@
 		<style>
 			body { 
 				margin: 0; 
-				background-image: url("assets/img/rooms/white2.jpg");
+				background: black;
+				background: linear-gradient(#2C3039, black); /* Standard syntax */
+				/*background-image: url("assets/img/rooms/window_view.jpg");*/
 			}
 			canvas { width: 100%; height: 100% }
 		</style>
 	</head>
 	<body>
+		<script src="static/libs/TweenLite.min.js"></script>
 		<script src="static/libs/three.js"></script>
 		<script src="static/libs/dat.gui.min.js"></script>
 		<script src="static/src/tools.js"></script>
@@ -61,7 +64,7 @@
 				camera.rotation.x = -0.08;
 				tanFOV = Math.tan(((Math.PI / 180) * camera.fov / 2 ));
 
-				renderer = new THREE.WebGLRenderer(/*{alpha:true}*/);
+				renderer = new THREE.WebGLRenderer({alpha:true});
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
 
@@ -175,8 +178,6 @@
 		    		plane_W = params.itemSize;
 
 		    		grid.updateItemSize( plane_W );
-
-		    		// console.log("ITEM W", plane_W);
 		    	}
 		    };
 

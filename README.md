@@ -45,10 +45,7 @@ four_row_matrix_config = {
 		"19":[6, 7, 6, 0],  
 		"20":[6, 5, 6, 3],  
 		"21":[6, 7, 8, 0],  
-		"22":[6, 7, 8, 1],  
-		"23":[6, 5, 8, 4],  
-		"24":[6, 7, 8, 2],  
-		"25":[0, 1, 0, 0]  
+		"22":[6, 7, 8, 1]  
 	};  
 ```  
 
@@ -82,8 +79,8 @@ Most likely a combination of the two approaches is needed with logic to determin
 You can toggle window resize scaling on/off in the UI controls in the top left. (The auto padding on window resize when scaling is off has not been implemented. You can use the x padding slider to adjust padding)
 
 #Docs
-###GridMatrix
-####- Constructor
+##GridMatrix
+###- Constructor
 
 **```GridMatrix( size, rowPadding, itemWidth )```**  
   
@@ -97,7 +94,7 @@ initial spacing between rows in grid
 - **```itemWidth```**  
 initial width of items in grid  
 
-####- Properties  
+###- Properties  
 ##### ```.size```  
 The total number of items used to make up the grid.  
   
@@ -119,7 +116,7 @@ Space in pixels between each item.
 ##### ```.rowZpadding```  
 Space in pixels between each row.  
   
-####- Methods  
+###- Methods  
   
 ##### ```.updateMatrix ( newSize )```   
 Updates the current matrix to a new one based on the argument passed into the ```size``` parameter.  
@@ -139,10 +136,10 @@ Set row padding between rows to the argument for the ```zPadding``` parameter.
 ##### ```.setMatrix ( size )```  
 Set the size (number of items) in the grid to the argument for the ```size``` parameter. 
   
-###Row  
+##Row  
 The Row object is an extension of an Array object and has custom properties and methods for managing items that are contained in a row.  
 
-####- Constructor  
+###- Constructor  
 
 **```Row( length, padding, itemWidth, zPos )```**  
 
@@ -159,7 +156,7 @@ Width of items in row. Used to calculate each items .x position
 The .z position for the Row object.   
 
 
-####- Properties  
+###- Properties  
 
 ##### ```.length```  
 Number if items in the Row  
