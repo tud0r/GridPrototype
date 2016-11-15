@@ -108,7 +108,7 @@ class GridMatrix {
 
 			// this.firstRowZpos = (this.padding * -1) // uncomment to update padding for first row
 		
-			this.rowZpadding[ rowIndex ] = (this.firstRowZpos  + (rowIndex * this.padding) * -1);
+			this.rowZpadding[ rowIndex ] = (this.firstRowZpos  + (rowIndex * this.padding) * -1); 
 		}
 
 		console.log( "grid.setRowPadding - padding", this.padding);

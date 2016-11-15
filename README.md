@@ -131,7 +131,11 @@ Called at initialization to create the initial grid row objects.
 Populates grid with items (3D Plane meshes created with THREE JS)  
 
 ##### ```.setRowPadding ( zPadding )```  
-Set row padding between rows to the argument for the ```zPadding``` parameter.  
+Set row padding between rows to the argument for the ```zPadding``` parameter. 
+Currently the padding between the camera and the first row stays the same but you can uncomment 
+this line  
+```this.firstRowZpos = (this.padding * -1)```  
+on line 109 to update the padding between the 1st row and the camera. 
 
 ##### ```.setMatrix ( size )```  
 Set the size (number of items) in the grid to the argument for the ```size``` parameter. 
